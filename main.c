@@ -83,8 +83,10 @@ void botao(char text[MAX_CHAR], int posY, int addXtext, int addYtext) {
 void criarNovoJogo(void) {
     
     Rectangle rec = { ((float)GetScreenWidth() - 400)/2, ((float)GetScreenHeight() - 400)/2, (float)400, (float)400 };
+    Texture2D grassTexture = LoadTexture("grass.jpeg");
     
     DrawRectangleRec(rec, WHITE);
     DrawRectangleLinesEx(rec, 3.0, BLACK);
+    DrawTexture(grassTexture, 300, 300, GREEN);
     
 }
