@@ -1,13 +1,3 @@
-//
-//  telaInicial.h
-//  INFmon
-//
-//  Created by Gustavo Machado Silva on 11/07/24.
-//
+void inicializaTela(void);
+void lacoPrincipal(void);
 
-#ifndef telaInicial_h
-#define telaInicial_h
-
-#include <stdio.h>
-
-#endif /* telaInicial_h */
