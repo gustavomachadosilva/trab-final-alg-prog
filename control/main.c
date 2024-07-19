@@ -4,11 +4,12 @@
 
 int main(void) {
     
-//    inicializaTela();
+    inicializaTela();
 //    lacoPrincipal();
-//    CloseWindow();
-    
     exibeMapa();
+    CloseWindow();
+    
+    
     
     return 0;;
 }
