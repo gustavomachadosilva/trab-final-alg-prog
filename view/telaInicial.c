@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "visualMapa.h"
+#include "telaInicial.h"
 
 #define MAX_CHAR 50
 
@@ -16,22 +16,12 @@
 #define TRUE 1
 #define FALSE 0
 
-void elementosDaTela(int nPressionado, Color *ptrBackgroundColor, int *naTelaInicial);
-void botao(char text[MAX_CHAR], int posY, int addXtext, int addYtext);
-void criarNovoJogo(void);
-
-void elementosDaTela(int nPressionado, Color *ptrBackgroundColor, int *naTelaInicial) {
+void elementosDaTela(void) {
     
     DrawText(TITULO_JOGO, POSICAO_TITULO_X, POSICAO_TITULO_Y, TAMANHO_FONTE_TITULO, BLACK);
     botao("Novo Jogo", 190, 120, 30);
     botao("Carregar Jogo", 320, 100, 30);
     botao("Sair", 450, 180, 30);
-    
-    if (nPressionado == TRUE) {
-        //criarNovoJogo();
-        //*ptrBackgroundColor = LIGHTGRAY;
-        *naTelaInicial = FALSE;
-    }
     
 }
 
@@ -44,7 +34,7 @@ void botao(char text[MAX_CHAR], int posY, int addXtext, int addYtext) {
 
 }
 
-void criarNovoJogo(void) {
+void telaCriarNovoJogo(void) {
     
     Rectangle rec = { ((float)GetScreenWidth() - 400)/2, ((float)GetScreenHeight() - 400)/2, (float)400, (float)400 };
     

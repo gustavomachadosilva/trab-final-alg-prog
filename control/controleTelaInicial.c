@@ -6,21 +6,24 @@
 #define TRUE 1
 #define FALSE 0
 
+#define BOTAO_NOVO_JOGO 'N'
+
 void exibeTelaInicial(void) {
     
-    int nPressionado = FALSE;
+    char botaoPressionado;
     Color backgroundColor = RAYWHITE;
     int naTelaInicial = TRUE;
     
     while (!WindowShouldClose() && naTelaInicial == TRUE) {
         
-        if (IsKeyPressed(KEY_N)) {
-            nPressionado = TRUE;
-        }
-
+        verificaBotaoPressionado(&botaoPressionado);
+        
         BeginDrawing();
         ClearBackground(backgroundColor);
-        elementosDaTela(nPressionado, &backgroundColor, &naTelaInicial);
+        elementosDaTela();
+        
+        executaAcaoBotaoPressionado(&botaoPressionado, &naTelaInicial);
+        
         EndDrawing();
         
     }
@@ -29,4 +32,31 @@ void exibeTelaInicial(void) {
         exibeMapa();
     }
     
+    
+}
+
+void verificaBotaoPressionado(char *botaoPressionado) {
+    
+    if (IsKeyPressed(KEY_N)) {
+        *botaoPressionado = BOTAO_NOVO_JOGO;
+    }
+    
+}
+
+void executaAcaoBotaoPressionado(char *botaoPressionado, int *naTelaInicial) {
+    
+    if (*botaoPressionado == BOTAO_NOVO_JOGO) {
+        criarNovoJogo(naTelaInicial);
+        
+    }
+    
+}
+
+void criarNovoJogo(int *naTelaInicial) {
+    
+    telaCriarNovoJogo();
+    
+    if (IsKeyPressed(KEY_C)) {
+        *naTelaInicial = FALSE;
+    }
 }

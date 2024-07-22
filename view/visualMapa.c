@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "raylib.h"
+#include "visualMapa.h"
 
 #define MAX_LINHAS 30
 #define MAX_COLUNAS 60
@@ -55,7 +56,7 @@ void exibeMapa(void) {
 
 void leArquivoMapa(char matrizChar[][MAX_COLUNAS]) {
     
-    char *filename = "mapa.txt";
+    char *filename = "./mapas/mapa1.txt";
     FILE *fp = fopen(filename, "r");
     int i, j;
     
