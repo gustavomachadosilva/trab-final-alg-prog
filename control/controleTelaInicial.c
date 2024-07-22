@@ -56,7 +56,7 @@ void criarNovoJogo(int *naTelaInicial) {
     
     telaCriarNovoJogo();
     
-    if (IsKeyPressed(KEY_C)) {
+    if (IsKeyPressed(KEY_S)) {
         *naTelaInicial = FALSE;
     }
 }
