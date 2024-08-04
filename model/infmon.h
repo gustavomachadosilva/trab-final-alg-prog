@@ -24,6 +24,9 @@
 #define TIPO_FOGO 1
 #define TIPO_TERRA 2
 #define VIDA_BASE 35
+#define ATAQUE_BASE 5
+#define DEFESA_BASE 2
+#define NIVEL_INICIAL 1
 
 typedef struct {
     int dano;
@@ -36,15 +39,21 @@ typedef struct {
     int nivel;
     int exp;
     int tipo;
+    int ataque;
+    int defesa;
     Ataque ataques[MAX_ATAQUES];
 }Infmon;
 
+void criaPrimeiroInfmonJogador(Infmon *infmon, int tipoInfmon);
 void criaInfmonAleatorio(Infmon *infmon);
+void defineAtributos(Infmon *infmon);
 int defineTipoAleatorio(void);
 void nomeiaAtaquesPorTipo(Infmon *infmon);
 void defineNomesAtaques(Infmon *infmon, char ataqueLeve[], char ataqueMedio[], char ataquePesado[]);
 int defineNivelAleatorio(void);
 void defineNome(Infmon *infmon);
 void defineVida(Infmon *infmon);
+void defineAtaque(Infmon *infmon);
+void defineDefesa(Infmon *infmon);
 
 #endif /* infmon_h */

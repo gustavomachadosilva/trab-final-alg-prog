@@ -7,18 +7,32 @@
 
 #include "infmon.h"
 
+void criaPrimeiroInfmonJogador(Infmon *infmon, int tipoInfmon) {
+    
+    infmon->tipo = tipoInfmon;
+    infmon->nivel = NIVEL_INICIAL;
+    
+    defineAtributos(infmon);
+}
+
 void criaInfmonAleatorio(Infmon *infmon) {
     
     srand(time(NULL));
     
     infmon->tipo = defineTipoAleatorio();
-    nomeiaAtaquesPorTipo(infmon);
-    
     infmon->nivel = defineNivelAleatorio();
     
-    defineNome(infmon);
+    defineAtributos(infmon);
     
+}
+
+void defineAtributos(Infmon *infmon) {
+    
+    nomeiaAtaquesPorTipo(infmon);
+    defineNome(infmon);
     defineVida(infmon);
+    defineAtaque(infmon);
+    defineDefesa(infmon);
     
 }
 
@@ -84,7 +98,14 @@ void defineVida(Infmon *infmon) {
     
 }
 
+void defineAtaque(Infmon *infmon) {
+    
+    infmon->ataque = ATAQUE_BASE * infmon->nivel;
+    
+}
 
-// Fogo -> Ragnaros
-// Agua -> Palafin
-// Terra -> Torterra
+void defineDefesa(Infmon *infmon) {
+    
+    infmon->defesa = DEFESA_BASE * infmon->nivel;
+    
+}
