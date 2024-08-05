@@ -1,22 +1,4 @@
-#include <stdio.h>
-#include "raylib.h"
 #include "visualMapa.h"
-
-#define MAX_LINHAS 30
-#define MAX_COLUNAS 60
-#define PASSO 60
-#define PASSO_UNIT 1
-#define LARGURA_QUADRADO 60
-#define ALTURA_QUADRADO 60
-#define TRUE 1
-#define FALSE 0
-#define X_INICIAL 600
-#define Y_INICIAL 300
-
-void leArquivoMapa(char matrizChar[][MAX_COLUNAS]);
-void preencheTelaComElementosMapa(char matrizChar[][MAX_COLUNAS], int posX, int posY);
-void movimentaJogador(int *posX, int *posY, char matrizChar[][MAX_COLUNAS]);
-int verificaSePodeMovimentar(int posX, int posY, char matrizChar[][MAX_COLUNAS]);
 
 void exibeMapa(void) {
     
@@ -27,6 +9,15 @@ void exibeMapa(void) {
     int posY = 0;
     
     leArquivoMapa(matrizChar);
+    
+    Image imagemChao = LoadImage("./chao.png");
+    Texture2D texturaChao = LoadTextureFromImage(imagemChao);
+    
+    Image imagemGrama = LoadImage("./grama.png");
+    Texture2D texturaGrama = LoadTextureFromImage(imagemGrama);
+    
+    Image imagemArvore = LoadImage("./arvore.png");
+    Texture2D texturaArvore = LoadTextureFromImage(imagemArvore);
     
     
     for (i=0; i<MAX_LINHAS; i++) {
@@ -43,7 +34,7 @@ void exibeMapa(void) {
         BeginDrawing();
         ClearBackground(GRAY);
         
-        preencheTelaComElementosMapa(matrizChar, posX, posY);
+        preencheTelaComElementosMapa(matrizChar, posX, posY, texturaChao, texturaGrama, texturaArvore);
         
         movimentaJogador(&posX, &posY, matrizChar);
         DrawRectangle(X_INICIAL, Y_INICIAL, LARGURA_QUADRADO, ALTURA_QUADRADO, BLUE);
@@ -74,10 +65,12 @@ void leArquivoMapa(char matrizChar[][MAX_COLUNAS]) {
     
 }
 
-void preencheTelaComElementosMapa(char matrizChar[][MAX_COLUNAS], int posX, int posY) {
+void preencheTelaComElementosMapa(char matrizChar[][MAX_COLUNAS], int posX, int posY, Texture2D texturaChao, Texture2D texturaGrama, Texture2D texturaArvore) {
     
     int i, j, k, l;
     char novaMatriz[10][20] = {};
+    
+    
     
     k=-1;
     l=-1;
@@ -93,19 +86,31 @@ void preencheTelaComElementosMapa(char matrizChar[][MAX_COLUNAS], int posX, int 
         l=-1;
     }
     
+    for (i=0; i<MAX_LINHAS; i++) {
+        for (j=0; j<MAX_COLUNAS; j++) {
+            DrawTexture(texturaChao, j*PASSO, i*PASSO, WHITE);
+            DrawTexture(texturaArvore, j*PASSO, i*PASSO, WHITE);
+        }
+    }
+    
     for (i=0; i<10; i++) {
         for (j=0; j<20; j++) {
             if (novaMatriz[i][j] == 'W') {
-                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, BLACK);
+//                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, BLACK);
+                DrawTexture(texturaChao, j*PASSO, i*PASSO, WHITE);
+                DrawTexture(texturaArvore, j*PASSO, i*PASSO, WHITE);
             }
             else if (novaMatriz[i][j] == 'G') {
-                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, GREEN);
+//                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, GREEN);
+                DrawTexture(texturaChao, j*PASSO, i*PASSO, WHITE);
+                DrawTexture(texturaGrama, j*PASSO, i*PASSO, WHITE);
             }
             else if (novaMatriz[i][j] == 'E') {
                 DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, RED);
             }
             else if (novaMatriz[i][j] == ' ' || novaMatriz[i][j] == 'J'){
-                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, WHITE);
+//                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, WHITE);
+                DrawTexture(texturaChao, j*PASSO, i*PASSO, WHITE);
             }
         }
     }
