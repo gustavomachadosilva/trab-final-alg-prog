@@ -47,7 +47,7 @@ void exibeMapa(void) {
 
 void leArquivoMapa(char matrizChar[][MAX_COLUNAS]) {
     
-    char *filename = "./mapas/mapa1.txt";
+    char *filename = "./mapas/caelid.txt";
     FILE *fp = fopen(filename, "r");
     int i, j;
     

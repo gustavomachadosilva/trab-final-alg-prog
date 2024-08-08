@@ -1,12 +1,9 @@
 #include "telaInicial.h"
 
-void elementosDaTela(Texture2D texturaNovoJogo, Color botaoC, Color botaoS, Texture2D texturaFundo, Texture2D texturaTitulo) {
+void elementosDaTela(Color botaoN, Color botaoC, Color botaoS) {
     
-    DrawTexture(texturaFundo, 0, 0, WHITE);
-    
-    DrawTexture(texturaTitulo, 400, 20, WHITE);
-    DrawTexture(texturaNovoJogo, 375, 190, WHITE);
-//    botao("Novo Jogo", 190, 120, 30, botaoN);
+    DrawText(TITULO_JOGO, POSICAO_TITULO_X, POSICAO_TITULO_Y, TAMANHO_FONTE_TITULO, BLACK);
+    botao("Novo Jogo", 190, 120, 30, botaoN);
     botao("Carregar Jogo", 320, 100, 30, botaoC);
     botao("Sair", 450, 180, 30, botaoS);
     

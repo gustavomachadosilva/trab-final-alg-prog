@@ -33,6 +33,7 @@ void defineAtributos(Infmon *infmon) {
     defineVida(infmon);
     defineAtaque(infmon);
     defineDefesa(infmon);
+    defineDanoAtaques(infmon);
     
 }
 
@@ -57,6 +58,14 @@ void nomeiaAtaquesPorTipo(Infmon *infmon) {
     else if (infmon->tipo == TIPO_TERRA) {
         defineNomesAtaques(infmon, "pedregulho", "prisao terrena", "terremoto");
     }
+    
+}
+
+void defineDanoAtaques(Infmon *infmon) {
+    
+    infmon->ataques[ATAQUE_LEVE].dano = infmon->ataque * FATOR_ATAQUE_LEVE;
+    infmon->ataques[ATAQUE_MEDIO].dano = infmon->ataque * FATOR_ATAQUE_MEDIO;
+    infmon->ataques[ATAQUE_PESADO].dano = infmon->ataque * FATOR_ATAQUE_PESADO;
     
 }
 
@@ -94,18 +103,63 @@ void defineNome(Infmon *infmon) {
 
 void defineVida(Infmon *infmon) {
     
-    infmon->vida = VIDA_BASE * infmon->nivel;
+    infmon->vida = VIDA_BASE + (FATOR_VIDA * infmon->nivel);
     
 }
 
 void defineAtaque(Infmon *infmon) {
     
-    infmon->ataque = ATAQUE_BASE * infmon->nivel;
+    infmon->ataque = ATAQUE_BASE + (FATOR_ATAQUE * infmon->nivel);
     
 }
 
 void defineDefesa(Infmon *infmon) {
     
-    infmon->defesa = DEFESA_BASE * infmon->nivel;
+    infmon->defesa = DEFESA_BASE + (FATOR_DEFESA * infmon->nivel);
+    
+}
+
+float identificaVantagemEntreInfmons(Infmon atacante, Infmon atacado) {
+    
+    float vantagem = SEM_VANTAGEM;
+    
+    if (atacante.tipo != atacado.tipo) {
+        
+        if (atacante.tipo == TIPO_AGUA) {
+            if (atacado.tipo == TIPO_FOGO) {
+                vantagem = VANTAGEM_ATACANTE;
+            }
+            else if (atacado.tipo == TIPO_TERRA) {
+                vantagem = VANTAGEM_ATACADO;
+            }
+        }
+        else if (atacante.tipo == TIPO_FOGO) {
+            if (atacado.tipo == TIPO_TERRA) {
+                vantagem = VANTAGEM_ATACANTE;
+            }
+            else if (atacado.tipo == TIPO_AGUA) {
+                vantagem = VANTAGEM_ATACADO;
+            }
+        }
+        else if (atacante.tipo == TIPO_TERRA) {
+            if (atacado.tipo == TIPO_AGUA) {
+                vantagem = VANTAGEM_ATACANTE;
+            }
+            else if (atacado.tipo == TIPO_FOGO) {
+                vantagem = VANTAGEM_ATACADO;
+            }
+        }
+        
+    }
+    
+    return vantagem;
+    
+}
+
+void atacar(Infmon *atacante, Infmon *atacado, int ataque) {
+    
+    float vantagem = identificaVantagemEntreInfmons(*atacante, *atacado);
+    
+    atacado->vida -= atacante->ataques[ataque].dano * vantagem;
     
 }

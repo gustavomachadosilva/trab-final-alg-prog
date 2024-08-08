@@ -6,25 +6,13 @@ void exibeTelaInicial(void) {
     Color backgroundColor = RAYWHITE;
     int naTelaInicial = TRUE;
     
-    Image fundo = LoadImage("./fundo.png");
-    Texture2D texturaFundo = LoadTextureFromImage(fundo);
-    
-    Image titulo = LoadImage("./titulo.png");
-    Texture2D texturaTitulo = LoadTextureFromImage(titulo);
-    
-    Image novoJogo = LoadImage("./novoJogo.png");
-    Texture2D texturaNovoJogo = LoadTextureFromImage(novoJogo);
-    
-    Image novoJogo2 = LoadImage("./novoJogo2.png");
-    Texture2D texturaNovoJogo2 = LoadTextureFromImage(novoJogo2);
-    
     while (!WindowShouldClose() && naTelaInicial == TRUE) {
         
         verificaBotaoPressionado(&botaoPressionado);
         
         BeginDrawing();
         ClearBackground(backgroundColor);
-        desenhaElementosTela(texturaFundo, texturaTitulo, texturaNovoJogo, texturaNovoJogo2);
+        desenhaElementosTela();
         
         executaAcaoBotaoPressionado(&botaoPressionado, &naTelaInicial);
         
@@ -33,22 +21,22 @@ void exibeTelaInicial(void) {
     }
     
     if (naTelaInicial == FALSE) {
-        exibeMapa();
+        exibeSelecaoInfmonInicial();
     }
     
     
 }
 
-void desenhaElementosTela(Texture2D texturaFundo, Texture2D texturaTitulo, Texture2D texturaNovoJogo, Texture2D texturaNovoJogo2) {
+void desenhaElementosTela(void) {
     
-    Texture2D botaoN = texturaNovoJogo;
+    Color botaoN = WHITE;
     Color botaoC = WHITE;
     Color botaoS = WHITE;
     int mouseX = GetMouseX();
     int mouseY = GetMouseY();
     
     if (mouseX > 400 && mouseX < 800 && mouseY > 190 && mouseY < 290) {
-        botaoN = texturaNovoJogo2;
+        botaoN = GRAY;
     }
 
     if (mouseX > 400 && mouseX < 800 && mouseY > 320 && mouseY < 420) {
@@ -59,7 +47,7 @@ void desenhaElementosTela(Texture2D texturaFundo, Texture2D texturaTitulo, Textu
         botaoS = GRAY;
     }
     
-    elementosDaTela(botaoN, botaoC, botaoS, texturaFundo, texturaTitulo);
+    elementosDaTela(botaoN, botaoC, botaoS);
     
 }
 

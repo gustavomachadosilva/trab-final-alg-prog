@@ -18,7 +18,7 @@
 #define TRUE 1
 #define FALSE 0
 
-void elementosDaTela(Texture2D botaoN, Color botaoC, Color botaoS, Texture2D texturaFundo, Texture2D texturaTitulo);
+void elementosDaTela(Color botaoN, Color botaoC, Color botaoS);
 void botao(char text[MAX_CHAR], int posY, int addXtext, int addYtext, Color corBotao);
 void telaCriarNovoJogo(Color corBotaoSim, Color corBotaoNao);
 
