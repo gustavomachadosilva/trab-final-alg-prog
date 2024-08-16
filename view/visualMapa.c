@@ -1,86 +1,43 @@
 #include "visualMapa.h"
 
-void exibeMapa(void) {
+void preencheTelaComElementosMapa(char matrizJogo[][MAX_COLUNAS], Estado save, Texture2D texturaChao, Texture2D texturaGrama, Texture2D texturaArvore) {
     
-    
-    char matrizChar[MAX_LINHAS][MAX_COLUNAS];
-    int i,j;
-    int posX = 0;
-    int posY = 0;
-    
-    leArquivoMapa(matrizChar);
-    
-    Image imagemChao = LoadImage("./chao.png");
-    Texture2D texturaChao = LoadTextureFromImage(imagemChao);
-    
-    Image imagemGrama = LoadImage("./grama.png");
-    Texture2D texturaGrama = LoadTextureFromImage(imagemGrama);
-    
-    Image imagemArvore = LoadImage("./arvore.png");
-    Texture2D texturaArvore = LoadTextureFromImage(imagemArvore);
-    
-    
-    for (i=0; i<MAX_LINHAS; i++) {
-        for (j=0; j<MAX_COLUNAS; j++) {
-            if (matrizChar[i][j] == 'J') {
-                posX = j;
-                posY = i;
-            }
-        }
-    }
-    
-    while (!WindowShouldClose()) {
-       
-        BeginDrawing();
-        ClearBackground(GRAY);
-        
-        preencheTelaComElementosMapa(matrizChar, posX, posY, texturaChao, texturaGrama, texturaArvore);
-        
-        movimentaJogador(&posX, &posY, matrizChar);
-        DrawRectangle(X_INICIAL, Y_INICIAL, LARGURA_QUADRADO, ALTURA_QUADRADO, BLUE);
-        
-        EndDrawing();
-        
-    }
-
-}
-
-void leArquivoMapa(char matrizChar[][MAX_COLUNAS]) {
-    
-    char *filename = "./mapas/caelid.txt";
-    FILE *fp = fopen(filename, "r");
-    int i, j;
-    
-    if (fp == NULL) {
-        printf("Error: could not open file %s", filename);
-    }
-    
-    for (i=0; i<=MAX_LINHAS; i++) {
-        for (j=0; j<=MAX_COLUNAS; j++) {
-            matrizChar[i][j] = fgetc(fp);
-        }
-    }
-    
-    fclose(fp);
-    
-}
-
-void preencheTelaComElementosMapa(char matrizChar[][MAX_COLUNAS], int posX, int posY, Texture2D texturaChao, Texture2D texturaGrama, Texture2D texturaArvore) {
-    
-    int i, j, k, l;
+    int i, j, k, l, m;
     char novaMatriz[10][20] = {};
-    
-    
+    int achouInimigo;
     
     k=-1;
     l=-1;
     
-    for (i=(posY-5); i<=(posY+4); i++) {
+    for (i=(save.jogador.posicao.y - 5); i<=(save.jogador.posicao.y + 4); i++) {
         k++;
-        for (j=(posX-10); j<=(posX+9); j++) {
+        for (j=(save.jogador.posicao.x - 10); j<=(save.jogador.posicao.x + 9); j++) {
             l++;
-            if (i>=0 && i<30 && j>=0 && j<60) {
-                novaMatriz[k][l] = matrizChar[i][j];
+            if (i>=0 && i<MAX_LINHAS && j>=0 && j<MAX_COLUNAS) {
+                
+                if (matrizJogo[i][j] == 'E') {
+                    m = 0;
+                    achouInimigo = FALSE;
+                    while (m<MAX_INIMIGOS && achouInimigo == FALSE) {
+                        
+                        if (i == save.inimigos[m].posicao.y && j == save.inimigos[m].posicao.x && save.inimigos[m].ativo == ATIVO) {
+                            achouInimigo = TRUE;
+                        }
+                        
+                        m++;
+                    }
+                    
+                    if (achouInimigo == TRUE) {
+                        novaMatriz[k][l] = 'E';
+                    }
+                    else {
+                        novaMatriz[k][l] = ' ';
+                    }
+                }
+                else {
+                    novaMatriz[k][l] = matrizJogo[i][j];
+                }
+                
             }
         }
         l=-1;
@@ -114,45 +71,13 @@ void preencheTelaComElementosMapa(char matrizChar[][MAX_COLUNAS], int posX, int 
             }
         }
     }
-}
-
-void movimentaJogador(int *posX, int *posY, char matrizChar[][MAX_COLUNAS]) {
-    
-    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-        if (verificaSePodeMovimentar((*posX)+PASSO_UNIT, *posY, matrizChar) == TRUE) {
-            *posX += PASSO_UNIT;
-        }
-    }
-    if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-        if (verificaSePodeMovimentar((*posX)-PASSO_UNIT, *posY, matrizChar) == TRUE) {
-            *posX -= PASSO_UNIT;
-        }
-    }
-    if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
-        if (verificaSePodeMovimentar(*posX, (*posY)-PASSO_UNIT, matrizChar) == TRUE) {
-            *posY -= PASSO_UNIT;
-        }
-    }
-    if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
-        if (verificaSePodeMovimentar(*posX, (*posY)+PASSO_UNIT, matrizChar) == TRUE) {
-            *posY += PASSO_UNIT;
-        }
-    }
     
 }
 
-int verificaSePodeMovimentar(int posX, int posY, char matrizChar[][MAX_COLUNAS]) {
-    
-    int numPosX = posX;
-    int numPosY = posY;
-    int podeMovimentar;
-    
-    if (matrizChar[numPosY][numPosX] == 'W') {
-        podeMovimentar = FALSE;
-    }
-    else {
-        podeMovimentar = TRUE;
-    }
-    
-    return podeMovimentar;
+void desenhaJogador(void) {
+    DrawRectangle(X_INICIAL, Y_INICIAL, LARGURA_QUADRADO, ALTURA_QUADRADO, BLUE);
 }
+
+
+
+

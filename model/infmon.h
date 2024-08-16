@@ -39,6 +39,11 @@
 #define VANTAGEM_ATACANTE 1.2
 #define VANTAGEM_ATACADO 0.8
 
+#define EXP_BASE 100
+#define FATOR_EXP 25
+#define GANHO_EXP_BASE 25
+#define FATOR_GANHO_EXP 10
+
 typedef struct {
     int dano;
     char nome[MAX_CHAR];
@@ -55,8 +60,8 @@ typedef struct {
     Ataque ataques[MAX_ATAQUES];
 }Infmon;
 
-void criaPrimeiroInfmonJogador(Infmon *infmon, int tipoInfmon);
-void criaInfmonAleatorio(Infmon *infmon);
+Infmon criaPrimeiroInfmonJogador(int tipoInfmon);
+Infmon criaInfmonAleatorio(void);
 void defineAtributos(Infmon *infmon);
 int defineTipoAleatorio(void);
 void nomeiaAtaquesPorTipo(Infmon *infmon);
@@ -68,5 +73,8 @@ void defineAtaque(Infmon *infmon);
 void defineDefesa(Infmon *infmon);
 void defineDanoAtaques(Infmon *infmon);
 float identificaVantagemEntreInfmons(Infmon infmon1, Infmon infmon2);
+void verificaSubirNivel(Infmon *infmon);
+void ganhaExpVitoria(Infmon *infmon, Infmon inimigo);
+void defineExpInicial(Infmon *infmon);
 
 #endif /* infmon_h */

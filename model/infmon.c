@@ -7,22 +7,30 @@
 
 #include "infmon.h"
 
-void criaPrimeiroInfmonJogador(Infmon *infmon, int tipoInfmon) {
+Infmon criaPrimeiroInfmonJogador(int tipoInfmon) {
     
-    infmon->tipo = tipoInfmon;
-    infmon->nivel = NIVEL_INICIAL;
+    Infmon infmonInicial;
     
-    defineAtributos(infmon);
+    infmonInicial.tipo = tipoInfmon;
+    infmonInicial.nivel = NIVEL_INICIAL;
+    
+    defineAtributos(&infmonInicial);
+    
+    return infmonInicial;
 }
 
-void criaInfmonAleatorio(Infmon *infmon) {
+Infmon criaInfmonAleatorio(void) {
     
     srand(time(NULL));
     
-    infmon->tipo = defineTipoAleatorio();
-    infmon->nivel = defineNivelAleatorio();
+    Infmon infmonAleatorio;
     
-    defineAtributos(infmon);
+    infmonAleatorio.tipo = defineTipoAleatorio();
+    infmonAleatorio.nivel = defineNivelAleatorio();
+    
+    defineAtributos(&infmonAleatorio);
+    
+    return infmonAleatorio;
     
 }
 
@@ -34,6 +42,7 @@ void defineAtributos(Infmon *infmon) {
     defineAtaque(infmon);
     defineDefesa(infmon);
     defineDanoAtaques(infmon);
+    defineExpInicial(infmon);
     
 }
 
@@ -95,7 +104,7 @@ void defineNome(Infmon *infmon) {
     else if (infmon->tipo == TIPO_FOGO) {
         strcpy(infmon->nome, "Ragnaros");
     }
-    else if (infmon->tipo == TIPO_FOGO) {
+    else if (infmon->tipo == TIPO_TERRA) {
         strcpy(infmon->nome, "Torterra");
     }
     
@@ -161,5 +170,30 @@ void atacar(Infmon *atacante, Infmon *atacado, int ataque) {
     float vantagem = identificaVantagemEntreInfmons(*atacante, *atacado);
     
     atacado->vida -= atacante->ataques[ataque].dano * vantagem;
+    
+}
+
+void verificaSubirNivel(Infmon *infmon) {
+    
+    int xpNecessariaParaUpar = EXP_BASE + (FATOR_EXP * infmon->nivel);
+    
+    if (infmon->exp > xpNecessariaParaUpar && infmon->nivel < MAX_NIVEL) {
+        
+        infmon->nivel++;
+        infmon->exp -= xpNecessariaParaUpar;
+        
+    }
+    
+}
+
+void ganhaExpVitoria(Infmon *infmon, Infmon inimigo) {
+    
+    infmon->exp += GANHO_EXP_BASE + (FATOR_GANHO_EXP * inimigo.nivel);
+    
+}
+
+void defineExpInicial(Infmon *infmon) {
+    
+    infmon->exp = 0;
     
 }

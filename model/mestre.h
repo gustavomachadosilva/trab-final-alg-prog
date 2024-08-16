@@ -11,12 +11,16 @@
 #include <stdio.h>
 #include "infmon.h"
 
-#define MAX_INFMONS 4
+#define MAX_INFMONS 3
 
 typedef struct {
     int x;
     int y;
+    int numInfmons;
     Infmon infmons[MAX_INFMONS];
 }Mestre;
+
+void salvaInfmonsJogador(Mestre jogador);
+void carregaInfmonsJogador(Mestre jogador);
 
 #endif /* mestre_h */

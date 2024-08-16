@@ -14,7 +14,7 @@ int main(void) {
     exibeTelaInicial();
     CloseWindow();
     
-    return 0;;
+    return 0;
 }
 
 void inicializaTela(void) {

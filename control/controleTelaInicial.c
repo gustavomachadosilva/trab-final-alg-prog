@@ -2,7 +2,7 @@
 
 void exibeTelaInicial(void) {
     
-    char botaoPressionado;
+    char botaoPressionado = BOTAO_OUTRO;
     Color backgroundColor = RAYWHITE;
     int naTelaInicial = TRUE;
     
@@ -20,8 +20,12 @@ void exibeTelaInicial(void) {
         
     }
     
-    if (naTelaInicial == FALSE) {
+    if (naTelaInicial == FALSE && botaoPressionado == BOTAO_NOVO_JOGO) {
         exibeSelecaoInfmonInicial();
+    }
+    
+    if (naTelaInicial == FALSE && botaoPressionado == BOTAO_CARREGAR_JOGO) {
+        acionaCarregarJogo();
     }
     
     
@@ -56,8 +60,14 @@ void verificaBotaoPressionado(char *botaoPressionado) {
     int mouseX = GetMouseX();
     int mouseY = GetMouseY();
     
-    if (IsKeyPressed(KEY_N) || (mouseX > 400 && mouseX < 800 && mouseY > 190 && mouseY < 290 && IsMouseButtonPressed(0))) {
+    if ((IsKeyPressed(KEY_N) || (mouseX > 400 && mouseX < 800 && mouseY > 190 && mouseY < 290 && IsMouseButtonPressed(0))) && *botaoPressionado == BOTAO_OUTRO) {
         *botaoPressionado = BOTAO_NOVO_JOGO;
+    }
+    if ((IsKeyPressed(KEY_C) || (mouseX > 400 && mouseX < 800 && mouseY > 320 && mouseY < 420 && IsMouseButtonPressed(0))) && *botaoPressionado == BOTAO_OUTRO) {
+        *botaoPressionado = BOTAO_CARREGAR_JOGO;
+    }
+    if ((IsKeyPressed(KEY_S) || (mouseX > 400 && mouseX < 800 && mouseY > 450 && mouseY < 550 && IsMouseButtonPressed(0))) && *botaoPressionado == BOTAO_OUTRO) {
+        *botaoPressionado = BOTAO_SAIR;
     }
     
     
@@ -68,7 +78,12 @@ void executaAcaoBotaoPressionado(char *botaoPressionado, int *naTelaInicial) {
     
     if (*botaoPressionado == BOTAO_NOVO_JOGO) {
         criarNovoJogo(naTelaInicial, botaoPressionado);
-        
+    }
+    if (*botaoPressionado == BOTAO_CARREGAR_JOGO) {
+        *naTelaInicial = FALSE;
+    }
+    if (*botaoPressionado == BOTAO_SAIR) {
+        *naTelaInicial = FALSE;
     }
     
 }
@@ -103,5 +118,15 @@ void criarNovoJogo(int *naTelaInicial, char *botaoPressionado) {
     if (mouseX > 640 && mouseX < 750 && mouseY > 330 && mouseY < 380 && IsMouseButtonPressed(0)) {
         *botaoPressionado = BOTAO_OUTRO;
     }
+    
+}
+
+void acionaCarregarJogo(void) {
+    
+    Estado save;
+    
+    carregaJogo(&save);
+    
+    exibeMapa(&save);
     
 }
