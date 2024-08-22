@@ -1,10 +1,3 @@
-//
-//  controleSelecaoInfmonInicial.c
-//  INFmon
-//
-//  Created by Gustavo Machado Silva on 06/08/24.
-//
-
 #include "controleSelecaoInfmonInicial.h"
 
 void exibeSelecaoInfmonInicial(void) {
@@ -12,13 +5,22 @@ void exibeSelecaoInfmonInicial(void) {
     int comecarJogo = FALSE;
     int tipoInfmon = TIPO_AGUA;
     
+    Image imagemInfTerra = LoadImage("./terra.png");
+    Texture2D texturaInfTerra = LoadTextureFromImage(imagemInfTerra);
+    
+    Image imagemInfFogo = LoadImage("./fogo.png");
+    Texture2D texturaInfFogo = LoadTextureFromImage(imagemInfFogo);
+    
+    Image imagemInfAgua = LoadImage("./agua.png");
+    Texture2D texturaInfAgua = LoadTextureFromImage(imagemInfAgua);
+    
     while(!WindowShouldClose() && comecarJogo == FALSE) {
         
         tipoInfmon = selecionaTipoInfmonInicial(&comecarJogo);
         
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        telaSelecaoInfmonInicial();
+        telaSelecaoInfmonInicial(texturaInfTerra, texturaInfFogo, texturaInfAgua);
         EndDrawing();
     }
     
@@ -38,15 +40,15 @@ int selecionaTipoInfmonInicial(int *comecarJogo) {
     int mouseX = GetMouseX();
     int mouseY = GetMouseY();
     
-    if (IsKeyPressed(KEY_A) || (mouseX >= 200 && mouseX <= 300 && mouseY >= 270 && mouseY <= 370 && IsMouseButtonPressed(0))) {
+    if (IsKeyPressed(KEY_A) || (mouseX >= 250 && mouseX <= 350 && mouseY >= 270 && mouseY <= 470 && IsMouseButtonPressed(0))) {
         *comecarJogo = TRUE;
         tipoInfmon = TIPO_AGUA;
     }
-    else if (IsKeyPressed(KEY_B) || (mouseX >= 550 && mouseX <= 650 && mouseY >= 270 && mouseY <= 370 && IsMouseButtonPressed(0))) {
+    else if (IsKeyPressed(KEY_B) || (mouseX >= 550 && mouseX <= 750 && mouseY >= 270 && mouseY <= 470 && IsMouseButtonPressed(0))) {
         *comecarJogo = TRUE;
         tipoInfmon = TIPO_FOGO;
     }
-    else if (IsKeyPressed(KEY_C) || (mouseX >= 900 && mouseX <= 1000 && mouseY >= 270 && mouseY <= 370 && IsMouseButtonPressed(0))) {
+    else if (IsKeyPressed(KEY_C) || (mouseX >= 900 && mouseX <= 1100 && mouseY >= 270 && mouseY <= 470 && IsMouseButtonPressed(0))) {
         *comecarJogo = TRUE;
         tipoInfmon = TIPO_TERRA;
     }

@@ -13,7 +13,7 @@
 #define X_INICIAL 600
 #define Y_INICIAL 300
 
-void preencheTelaComElementosMapa(char matrizJogo[][MAX_COLUNAS], Estado save, Texture2D texturaChao, Texture2D texturaGrama, Texture2D texturaArvore);
-void desenhaJogador(void);
+void preencheTelaComElementosMapa(char matrizJogo[][MAX_COLUNAS], Estado save, Texture2D texturaChao, Texture2D texturaGrama, Texture2D texturaArvore, Texture2D texturaInimigo);
+void desenhaJogador(Texture2D texturaJogador);
 
 #endif /* visualMapa_h */

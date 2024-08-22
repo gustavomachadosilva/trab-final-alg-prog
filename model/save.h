@@ -55,9 +55,9 @@ typedef struct {
 
 int salvaJogo(Estado *save);
 int carregaJogo(Estado *save);
-void capturaInfmon(Estado *save, Infmon infmon);
+int capturaInfmon(Estado *save, Infmon infmon);
 Estado criaSaveInicial(Infmon infmonInicial);
-void passaParaProximoMapa(Estado *save);
+int passaParaProximoMapa(Estado *save);
 void leArquivoMapa(char matrizJogo[][MAX_COLUNAS], char fileName[]);
 void encontraPosicaoInicialJogadorEInimigos(char matrizJogo[][MAX_COLUNAS], Estado *save);
 void identificaNomeMapa(char fileName[], Estado save);

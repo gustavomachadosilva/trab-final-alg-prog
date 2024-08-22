@@ -13,7 +13,7 @@
 
 #define MAX_CHAR 100
 
-void telaSelecaoInfmonInicial(void);
-void opcaoInfmon(Color cor, int posX, int posY, char tecla[], char nomeInfmon[]);
+void telaSelecaoInfmonInicial(Texture2D texturaInfTerra, Texture2D texturaInfFogo, Texture2D texturaInfAgua);
+void opcaoInfmon(Texture2D texturaInfmon, int posX, int posY, char tecla[], char nomeInfmon[], int ajustXtecla, int ajusteXnome);
 
 #endif /* telaSelecaoInfmonInicial_h */

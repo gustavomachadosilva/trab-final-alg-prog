@@ -1,6 +1,6 @@
 #include "telaPause.h"
 
-void jogoRolando(int *estadoTela, Estado *save){
+void jogoRolando(int *estadoTela, Estado *save, char matrizJogo[][MAX_COLUNAS]){
 
     switch(*estadoTela){
 
@@ -10,7 +10,7 @@ void jogoRolando(int *estadoTela, Estado *save){
             break;
 
         case TELA_PAUSE:
-            abrirMenuPause(estadoTela, save);
+            abrirMenuPause(estadoTela, save, matrizJogo);
             break;
 
         case TELA_CONFIRMACAO:
@@ -19,8 +19,9 @@ void jogoRolando(int *estadoTela, Estado *save){
     }
 }
 
-void abrirMenuPause(int *estadoTela, Estado *save){
-
+void abrirMenuPause(int *estadoTela, Estado *save, char matrizJogo[][MAX_COLUNAS]){
+    
+    char fileName[MAX_CHAR];
     Color grayFADE = Fade(GRAY, 0.8);
 
     DrawRectangle(0, 0, LARGURA_TELA, ALTURA_TELA, grayFADE);
@@ -46,6 +47,8 @@ void abrirMenuPause(int *estadoTela, Estado *save){
     if(IsKeyPressed(KEY_L)){
         printf("game loaded!\n");
         carregaJogo(save);
+        identificaNomeMapa(fileName, *save);
+        leArquivoMapa(matrizJogo, fileName);
     }
     else if(GetMouseX()>= 450 && GetMouseX()<= 625 && GetMouseY()>= 225 && GetMouseY()<= 275){      // verifica se o mouse esta dentro do botao, se estiver, muda de cor
 
@@ -56,6 +59,8 @@ void abrirMenuPause(int *estadoTela, Estado *save){
         if(IsMouseButtonPressed(0)){
             printf("game loaded!\n");
             carregaJogo(save);
+            identificaNomeMapa(fileName, *save);
+            leArquivoMapa(matrizJogo, fileName);
         }
     }
 //----------------------------------------------------------------------------------
@@ -81,6 +86,7 @@ void abrirMenuPause(int *estadoTela, Estado *save){
     DrawText("VOLTAR AO MENU (B)", 455, 365, TAMANHO_FONTE_BOTAO_PAUSE - 1, BLACK);
     if(IsKeyPressed(KEY_B)){
         printf("voltando ao menu!\n");   // VOLTAR AO MENU INICIAL
+        *estadoTela = TELA_MENU;
     }
     else if(GetMouseX()>= 450 && GetMouseX()<= 625 && GetMouseY()>= 345 && GetMouseY()<= 395){      // verifica se o mouse esta dentro do botao, se estiver, muda de cor
 
@@ -90,6 +96,7 @@ void abrirMenuPause(int *estadoTela, Estado *save){
 
         if(IsMouseButtonPressed(0)){
            printf("voltando ao menu!\n"); // VOLTAR AO MENU INICIAL
+            *estadoTela = TELA_MENU;
         }
     }
 //---------------------------------------------------------------------------------
@@ -166,14 +173,6 @@ void botaoTelaPause(char text[], int posX, int posY, int addXtext, int addYtext)
     Rectangle rec = {posX, posY, (float)LARGURA_BOTAO_PAUSE, (float)ALTURA_BOTAO_PAUSE};
     DrawRectangleLinesEx(rec, ESPESSURA_LINHA, BLACK);
     DrawText(text, rec.x + addXtext, rec.y + addYtext, TAMANHO_FONTE_BOTAO_PAUSE, BLACK);
-
-}
-
-void botaoTelaAtaques(char text[], int posX, int posY, int addXtext, int addYtext) {
-
-    Rectangle rec = {posX, posY, (float)LARGURA_BOTAO, (float)ALTURA_BOTAO};
-    DrawRectangleLinesEx(rec, ESPESSURA_LINHA, BLACK);
-    DrawText(text, rec.x + addXtext, rec.y + addYtext, TAMANHO_FONTE_BOTAO_ATAQUES, BLACK);
 
 }
 

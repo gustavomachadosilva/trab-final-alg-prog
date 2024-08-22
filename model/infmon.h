@@ -25,7 +25,7 @@
 #define TIPO_TERRA 2
 #define VIDA_BASE 100
 #define ATAQUE_BASE 25
-#define DEFESA_BASE 15
+#define DEFESA_BASE 10
 #define NIVEL_INICIAL 1
 
 #define FATOR_ATAQUE 5
@@ -76,5 +76,6 @@ float identificaVantagemEntreInfmons(Infmon infmon1, Infmon infmon2);
 void verificaSubirNivel(Infmon *infmon);
 void ganhaExpVitoria(Infmon *infmon, Infmon inimigo);
 void defineExpInicial(Infmon *infmon);
+void atacar(Infmon *atacante, Infmon *atacado, int ataque);
 
 #endif /* infmon_h */

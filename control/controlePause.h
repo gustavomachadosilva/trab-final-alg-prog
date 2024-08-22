@@ -8,6 +8,6 @@
 #define TRUE 1
 #define FALSE 0
 
-void exibeMenuPause(int *jogoPausado, int *estadoTela, Estado *save);
+void exibeMenuPause(int *jogoPausado, int *estadoTela, Estado *save, char matrizJogo[][MAX_COLUNAS]);
 
 #endif /* controlePause_h */

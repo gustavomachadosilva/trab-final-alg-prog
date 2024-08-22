@@ -46,15 +46,23 @@ int carregaJogo(Estado *save) {
     
 }
 
-void capturaInfmon(Estado *save, Infmon infmon) {
+int capturaInfmon(Estado *save, Infmon infmon) {
     
-    if (save->jogador.numInfmons == MAX_INFMONS) {
+    int capturou = FALSE;
+    int maxVida = VIDA_BASE + (FATOR_VIDA * infmon.nivel);
+    
+    if (save->jogador.numInfmons == MAX_INFMONS || (infmon.vida > (maxVida / 4))) {
         printf("Nao eh possivel capturar mais infmons!\n");
     }
     else {
+        defineVida(&infmon);
         save->jogador.infmons[save->jogador.numInfmons] = infmon;
         save->jogador.numInfmons++;
+        capturou = TRUE;
+        printf("Infmon capturado!\n");
     }
+    
+    return capturou;
     
 }
 
@@ -158,10 +166,11 @@ Estado criaSaveInicial(Infmon infmonInicial) {
     return saveInicial;
 }
 
-void passaParaProximoMapa(Estado *save) {
+int passaParaProximoMapa(Estado *save) {
     
     char matrizJogo[MAX_LINHAS][MAX_COLUNAS];
     char fileName[MAX_CHAR];
+    int passou = TRUE;
     
     if (save->numMapa < MAX_MAPAS) {
         save->numMapa++;
@@ -172,5 +181,10 @@ void passaParaProximoMapa(Estado *save) {
         encontraPosicaoInicialJogadorEInimigos(matrizJogo, save);
         
     }
+    else {
+        passou = FALSE;
+    }
+    
+    return passou;
     
 }

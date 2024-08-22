@@ -45,12 +45,14 @@
 #define TELA_JOGO 4               // tela do 'jogo rolando'
 #define TELA_CONFIRMACAO 5        // tela para confirmar se o jogador deseja mesmo fazer
 #define SAINDO 6
+#define TELA_FINAL 7
+#define TELA_MENU 8
 
 //prototipos funcoes:
 void botaoTelaPause(char text[], int posX, int posY, int addXtext, int addYtext);
 void botaoTelaAtaques(char text[], int posX, int posY, int addXtext, int addYtext);
-void abrirMenuPause(int *estadoTela, Estado *save);
-void jogoRolando(int *estadoTela, Estado *save);
+void abrirMenuPause(int *estadoTela, Estado *save, char matrizJogo[][MAX_COLUNAS]);
+void jogoRolando(int *estadoTela, Estado *save, char matrizJogo[][MAX_COLUNAS]);
 void abrirTelaConfirmacao(int *estadoTela);
 void desenhaBordaBotao(int posX, int posY, int addXtext, int addYtext);
 void desenhaBordaBotaoConfirmacao(int posX, int posY, int addXtext, int addYtext);

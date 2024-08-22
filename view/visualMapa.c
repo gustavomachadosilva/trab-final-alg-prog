@@ -1,6 +1,6 @@
 #include "visualMapa.h"
 
-void preencheTelaComElementosMapa(char matrizJogo[][MAX_COLUNAS], Estado save, Texture2D texturaChao, Texture2D texturaGrama, Texture2D texturaArvore) {
+void preencheTelaComElementosMapa(char matrizJogo[][MAX_COLUNAS], Estado save, Texture2D texturaChao, Texture2D texturaGrama, Texture2D texturaArvore, Texture2D texturaInimigo) {
     
     int i, j, k, l, m;
     char novaMatriz[10][20] = {};
@@ -63,7 +63,9 @@ void preencheTelaComElementosMapa(char matrizJogo[][MAX_COLUNAS], Estado save, T
                 DrawTexture(texturaGrama, j*PASSO, i*PASSO, WHITE);
             }
             else if (novaMatriz[i][j] == 'E') {
-                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, RED);
+//                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, RED);
+                DrawTexture(texturaChao, j*PASSO, i*PASSO, WHITE);
+                DrawTexture(texturaInimigo, j*PASSO, i*PASSO, WHITE);
             }
             else if (novaMatriz[i][j] == ' ' || novaMatriz[i][j] == 'J'){
 //                DrawRectangle(j*PASSO, i*PASSO, LARGURA_QUADRADO, ALTURA_QUADRADO, WHITE);
@@ -74,8 +76,8 @@ void preencheTelaComElementosMapa(char matrizJogo[][MAX_COLUNAS], Estado save, T
     
 }
 
-void desenhaJogador(void) {
-    DrawRectangle(X_INICIAL, Y_INICIAL, LARGURA_QUADRADO, ALTURA_QUADRADO, BLUE);
+void desenhaJogador(Texture2D texturaJogador) {
+    DrawTexture(texturaJogador, X_INICIAL, Y_INICIAL, WHITE);
 }
 
 

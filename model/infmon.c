@@ -1,10 +1,3 @@
-//
-//  infmon.c
-//  INFmon
-//
-//  Created by Gustavo Machado Silva on 29/07/24.
-//
-
 #include "infmon.h"
 
 Infmon criaPrimeiroInfmonJogador(int tipoInfmon) {
@@ -169,7 +162,12 @@ void atacar(Infmon *atacante, Infmon *atacado, int ataque) {
     
     float vantagem = identificaVantagemEntreInfmons(*atacante, *atacado);
     
-    atacado->vida -= atacante->ataques[ataque].dano * vantagem;
+    int dano = (atacante->ataques[ataque].dano * vantagem) - atacado->defesa;
+    
+    if (dano >= 0) {
+        atacado->vida -= dano;
+    }
+    
     
 }
 
@@ -181,6 +179,8 @@ void verificaSubirNivel(Infmon *infmon) {
         
         infmon->nivel++;
         infmon->exp -= xpNecessariaParaUpar;
+        
+        defineAtributos(infmon);
         
     }
     
